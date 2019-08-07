@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.securty.imut.dao.ArticleDao">
+ 
+	<resultMap type="com.securty.imut.bean.Article" id="articleMap">
+		<id property="articleId" column="articleid" />
+		<result property="articleTitle" column="articletitle" />
+		<result property="articleSummary" column="articlesummary" />
+		<result property="articleDetail" column="articledetail" />
+		<result property="nowDate" column="nowdate" />
+		<association property="user" javaType="com.securty.imut.bean.User">
+			<id property="userId" column="userid" />
+			<result property="userName" column="username"/>
+			<result property="userPass" column="userpass" />
+		</association>
+	</resultMap>
+	<resultMap type="com.securty.imut.bean.Article" id="articleOneMap">
+		<id property="articleId" column="articleid" />
+		<result property="articleTitle" column="articletitle" />
+		<result property="articleSummary" column="articlesummary" />
+		<result property="articleDetail" column="articledetail" />
+		<result property="nowDate" column="nowdate" />
+	</resultMap>
+ 
+	<select id="findAll" resultMap="articleMap">
+		select * from article a, suser s where a.userid = s.userid
+	</select>
+	
+	<select id="queryPage" resultMap="articleMap"  parameterType="Integer">
+		select * from article a, suser s
+		    where a.userid = s.userid
+			order by articleid desc 
+			limit #{startRows},5
+	</select>
+	
+	<select id="getRowCount" resultType="Integer">
+		select count(*) from article
+	</select>
+	
+	<!-- 添加信息 -->
+	<insert id="addArticle" parameterType="com.securty.imut.bean.Article">
+		insert into article(articletitle,articlesummary,articledetail,nowdate,userid)
+		values(#{articleTitle},#{articleSummary},#{articleDetail},'20190515122545',2)
+	</insert>
+	
+	<!-- 根据主键修改用户信息 -->
+	<update id="updateArticleById" parameterType="com.securty.imut.bean.Article">
+		update article set 
+			articlettitle=#{articleTitle},
+			articletsummary=#{articleSummary},
+			articledetail=#{articleDetail}
+		where articleid=#{articleId}
+	</update>
+	
+	<!-- 根据主键查询文章信息 -->
+	<select id="selectArticlesById" 
+		parameterType="Integer" 
+		resultType="com.securty.imut.bean.Article">
+		select * from article where articleid = #{articleId}
+	</select>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteArticleById" parameterType="Integer">
+		DELETE FROM Article WHERE articleid = #{articleId}
+	</delete>
+ 
+</mapper>

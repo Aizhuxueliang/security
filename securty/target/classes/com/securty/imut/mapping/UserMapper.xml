@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.securty.imut.dao.UserDao">
+ 
+	<resultMap type="User" id="userMap">
+		<id property="userId" column="userid" />
+		<result property="userName" column="username" />
+		<result property="userPass" column="userpass" />
+		<collection property="articles" ofType="com.securty.imut.bean.Article">
+			<id property="articleId" column="articleid" />
+			<result property="articleTitle" column="articletitle" />
+			<result property="articleSummary" column="articlesummary" />
+			<result property="articleDetail" column="articledetail" />
+		</collection>
+	</resultMap>
+ 	
+ 	<sql id="userColumns">
+        userid,username
+    </sql>
+    
+	<select id="findAll" resultMap="userMap">
+		select s.userid, s.username, s.userpass
+			from article a, suser s
+		    where s.userid = a.userid
+	</select>
+	
+	<!-- 添加用户信息 -->
+	<insert id="addUser">
+		insert into suser(username,userpass)
+		values(#{userName},#{userPass})
+	</insert>
+	
+	<!-- 根据主键修改用户信息 -->
+	<update id="updateUserById" parameterType="com.securty.imut.bean.User">
+		update suser set 
+			username=#{userName},
+			userpass=#{userPass}
+		where userid=#{userId}
+	</update>
+	
+	<!-- 根据主键查询用户信息 -->
+	<select id="selectUsersById" 
+		parameterType="Integer" 
+		resultType="com.securty.imut.bean.User">
+		select s.userid, s.username, s.userpass from suser s where s.userid = #{userId}
+	</select>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUserById" parameterType="Integer">
+		DELETE FROM suser WHERE userid = #{userId}
+	</delete>
+ 
+</mapper>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html >
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<title>文章详情</title>
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+	<script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+	<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	/*获取到Url里面的参数*/
+		(function ($) {
+		  $.getUrlParam = function (name) {
+		   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		   var r = window.location.search.substr(1).match(reg);
+		   if (r != null) return unescape(r[2]); 
+		   return null;
+		  }
+		})(jQuery);
+		$(document).ready(function () {
+			$.ajax({
+				url : '../article/read',
+				type : 'POST',
+				dataType : 'json',
+				data : {"articleId":$.getUrlParam('aid')},
+				success :function(data) {
+					var code = 
+						"<div>\r\n" + 
+						"<h2>\r\n" + 
+						"	<a href=\"#\" id=\"title\">"+data.articleTitle+"</a>\r\n" + 
+						"</h2>\r\n" + 
+						"<h5>\r\n" +  
+						"   <span class=\"glyphicon glyphicon-calendar\" aria-hidden=\"true\">"+data.nowDate+"</span>\r\n" + 
+						"</h5>\r\n" + 
+						"<div id=\"summary\">"+data.articleSummary+"</div>\r\n" + 
+						"<p id=\"detail\">"+data.articleDetail+"</p>\r\n" + 
+						"\r\n" + 
+						"<hr />\r\n" + 
+						"</div>";
+					$("#tableBody").html(code);
+				},
+				error : function(data) {
+					alert("出错了！");
+				}
+			});
+		});
+	
+	</script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+					<span class="sr-only">切换导航</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">校园安全动态</a>
+			</div>
+			<div class="collapse navbar-collapse" id="example-navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">首页</a></li>
+					<li><a href="#">动态</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							管理 <b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">文章</a></li>
+							<li><a href="#">评论</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+
+
+			<div id="tableBody" class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+
+
+
+				<div>
+					<h2>
+						<a href="#" id="title">当今软件发展的现状非常适合 Cloud Native 环境</a>
+					</h2>
+					<h5> <span class="glyphicon glyphicon-calendar" aria-hidden="true">2018-02-10</span>
+						<span class="glyphicon glyphicon-user" aria-hidden="true">SpringBoot Redis</span>
+					</h5>
+					<div id="summary"></div>
+					<p id="detail">有时，为了提升整个网站的性能，我们会将经常需要访问数据缓存起来，这样，在下次查询的时候，能快速的找到这些数据。
+						缓存的使用与系统的时效性有着非常大的关系。当我们的系统时效性要求不高时，则选择使用缓存是极好的。当系统要求的时效性
+						比较高时，则并不适合用缓存。 本文，我们将演示如何通过集成 Redis 服务器来进行数据的缓存，以提高微服务的并发访问能力。
+						早期的软件，大多数是由使用该软件的个人或机构研制的，所以软件往往带有非常强烈的个人色彩。早期的软件开发也没有什么系统
+						的方法论可以遵循，完全是“个人英雄主义”，也不存在所谓的软件设计，纯粹就是某个人的头脑中思想的表达。而且，当时的软件往
+						往是围绕硬件的需求来定制化开发的，有什么样的硬件就有什么样的软件。所以，软件缺乏通用性。同时，由于软件开发过程不需要
+						与他人协作，所以，软件除了源代码外，往往没有软件设计、使用说明书等文档。这样，就造成了软件行业缺乏经验的传承。
+
+						从60年代中期到70年代中期是计算机系统发展的第二个时期，在这一时期软件开始被当作一种产品被广泛使用。所谓产品，就是可
+						以提供给不同的人使用，从而提高了软件的重用率，降低了软件开发的成本。比如，以前，一套软件，只能专门提供给某个人使用。
+						现在，同一套软件可以批量的卖给不同的人，显然，分摊到相同软件上的开发成本而言，卖的越多，成本自然就越低。这个时期，
+						出现了类似“软件作坊”的专职替别人的开发软件的团体。虽然是团体协作，但软件开发的方法基本上仍然沿用早期的个体化软件开
+						发方式，这样导致的问题是，软件的数量急剧膨胀，软件需求日趋复杂，软件的维护难度也就越来越大，开发成本变得越来越高了
+						，从而导致软件项目频频遭遇失败。这就演变成了“软件危机”。
+
+						“软件危机”迫使人们开始思考软件的开发方式，使得人们开始对软件及其特性进行了更加深入的研究，人们对待软件的观念也在
+						发生悄然的改变。在早期，由于计算机的数量很少，只有少数军方或者科研机构才有机会接触到计算机，这就让大多数人认
+						为，软件开发人员都是稀少且优秀的（一开始确实也是如此，毕竟计算机最初制作者都是数学界的天才）。由于，软件开
+						发的技能，只能被少数人所掌握，所以大多数人对于“什么是好的软件”缺乏共识。实际上，早期那些被认为是优秀的程序常常很
+						难被别人看懂，里面充斥着各种程序技巧。加之，当时的硬件资源比较紧缺，迫使开发人员在编程时，往往需要考虑更少的占用机
+						子资源，从而会采用不易阅读的“精简”方式来开发，这更加加重了软件的个性化。而现在人们普遍认为，优秀的程序除了功能正确
+						，性能优良之外，还应该更加让人容易看懂、容易使用、容易修改和扩充。这就是软件可维护性的要求。
+
+						1968年 NATO 会议上首次提出“软件危机”(Software Crisis)这个名词，同时，提出了期望通过“软件工程（Sotfwrae Engineeirng）”来解决“软件危机”。“软件工程”的目的，就是要把软件开发从“艺术”和“个体行为”向“工程”和“群体协同工作”进行转化，从而解决“软件危机”包含两方面问题：
+					</p>
+
+					<hr />
+				</div>
+
+
+				
+			</div>
+		</div>
+	</div>
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">Copyright &copy; 2019 &nbsp; 朱学良 &nbsp; 蒙ICP备15101216号-1 &nbsp;</a></li>
+			</ul>
+		</div>
+	</nav>
+</body>
+
+</html>
